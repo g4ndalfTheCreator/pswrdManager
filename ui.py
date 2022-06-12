@@ -175,13 +175,13 @@ def after_login_menu(user_name):
     return True    
 
 
-def main():
+def ui():
     
     print('Welcome to p4ssw0rd manager 0.01')
 
     while pre_login_menu():
         pass
+    
+    return
 
-
-if __name__ == "__main__":
-    main()
+ui()
