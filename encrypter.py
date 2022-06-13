@@ -28,9 +28,9 @@ class Encrypter(object):
             return True, b64encode(iv + encrypted_text).decode("utf-8")
 
         except UnicodeEncodeError:
-            # If encrypting fails
+            # If encrypting fails returns False with empty string
 
-            return False
+            return False, ''
 
     def decrypt(self, encrypted_text):
         # Decrypts encrypted txt 
@@ -47,9 +47,9 @@ class Encrypter(object):
             return True, self.unpad(text) 
         
         except UnicodeDecodeError:
-            # If user has given wrong password 
+            # If user has given wrong password returns False with empty string
 
-            return False
+            return False, ''
 
         
 
