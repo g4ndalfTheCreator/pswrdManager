@@ -1,3 +1,4 @@
+from login import logg
 from getpass import getpass
 
 
@@ -37,7 +38,9 @@ def login (user_name='', password=''):
         user_name = input('Username: ')
         password = getpass('Password: ')
 
-    if user_name == 'Testi': # == Users file has found...
+        access = logg(user_name, password)
+
+    if access == True: # == Users file has found...
          while after_login_menu(user_name):
             pass
 
