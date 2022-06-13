@@ -55,9 +55,10 @@ class Encrypter(object):
         last_character = text[len(text) - 1:]
         return text[:-ord(last_character)]
 
+'''
 encrypter = Encrypter('AadssssssssssssaDFaaaaaaaaaaaaaaaaaaaaaaaaaa')
 
-txt = 'Nacciveneet on kivoja'
+txt = 'Nacciveneet on kivojaaAAAAAAAAAAAAAAAAAAAAAASAFAFAFFAFaafFA'
 
 encrypted = encrypter.encrypt(txt)
 
@@ -68,5 +69,6 @@ uncrypted = encrypter.decrypt(encrypted)
 print(uncrypted)
 
 # Case wrong password
-falsepss =  Encrypter('AadssssssssssssaDFaaaaaaaaaaaaaaaaaaaaaaaaaa')
+falsepss =  Encrypter('Q')
 print(falsepss.decrypt(encrypted))
+'''
