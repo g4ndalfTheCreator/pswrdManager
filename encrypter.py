@@ -1,3 +1,4 @@
+from ast import Return
 import hashlib
 from Crypto import Random
 from Crypto.Cipher import AES
@@ -15,11 +16,21 @@ class Encrypter(object):
     def encrypt(self, text):
         # Makes encryption
 
-        text = self.pad(text)
-        iv = Random.new().read(self.__block_size)
-        cipher = AES.new(self.__key, AES.MODE_CBC, iv)
-        encrypted_text = cipher.encrypt(text.encode())
-        return b64encode(iv + encrypted_text).decode("utf-8")
+        try:
+            # Tries to encrypt the text
+
+            text = self.pad(text)
+            iv = Random.new().read(self.__block_size)
+            cipher = AES.new(self.__key, AES.MODE_CBC, iv)
+            encrypted_text = cipher.encrypt(text.encode())
+
+             # Returns confirmantion of succesfull encrypting and text
+            return True, b64encode(iv + encrypted_text).decode("utf-8")
+
+        except UnicodeEncodeError:
+            # If encrypting fails
+
+            return False
 
     def decrypt(self, encrypted_text):
         # Decrypts encrypted txt 
@@ -31,13 +42,16 @@ class Encrypter(object):
             iv = encrypted_text[:self.__block_size]
             cipher = AES.new(self.__key, AES.MODE_CBC, iv)
             text = cipher.decrypt(encrypted_text[self.__block_size:]).decode("utf-8")
-            return self.unpad(text)
+
+            # Returns confirmantion of succesfull decrypting and text
+            return True, self.unpad(text) 
         
         except UnicodeDecodeError:
             # If user has given wrong password 
 
-            return 'Wrong password'
+            return False
 
+        
 
     def pad(self, text):
         # Padds text to pieces for encrypter to encrypt. Makes sure that strings are long enough
