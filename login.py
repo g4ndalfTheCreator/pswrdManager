@@ -1,5 +1,6 @@
 import pathlib
 from pathlib import Path
+from file_handler import FileHandler
 
 def logg(user_name, password):
     # Finding the right file and try to open it
@@ -14,9 +15,13 @@ def logg(user_name, password):
     if path.is_file():
         # Check if the file exists
 
-        # rightAccess decrypt(filepath, password)
+        # Setting up file handler
+        filehandler = FileHandler(path, password)
 
-        rightAccess = True
+        # rightAccess decrypt(filepath, password)
+        rightAccess = filehandler.open_file()
+
+        print(filehandler.get_data())
 
         if rightAccess == False:
 
@@ -41,7 +46,7 @@ def wrongUserorPass():
 
 def main():
 
-    logg("testUser", "testPass")
+    logg("testUser", "samppa")
 
     return
 
