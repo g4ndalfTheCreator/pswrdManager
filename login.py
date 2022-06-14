@@ -36,9 +36,10 @@ class Logg:
 
         return False, ""
 
-    def logout(self , services):
-        
-        self.__filehandler.write_file(services)
+    def save_into_file(self , services):
+        # Saves data into file and returns if it was succesfull
+
+        return self.__filehandler.write_file(services)
 
 
     def wrongUserorPass(self):

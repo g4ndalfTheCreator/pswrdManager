@@ -55,9 +55,10 @@ def help(loginstatus):
         print(
         '''
         q - Log Out
+        s - save
         a - Add new password
         l - list all servises available
-        s - Make a search based on database
+        f - Make a search based on database
         d - Delete info
         h - Ask for help
         ''')
@@ -178,9 +179,14 @@ def after_login_menu(user_name, serviceList, logInfo):
 
     if(cmd == 'q'):
         # Closes program and encrypts
-        logInfo.logout(serviceList)
+        status = logInfo.save_into_file(serviceList)
 
-        print('Login out...')
+        if status:
+            print('Saved and login out...')
+        
+        else:
+            print('An error occurred while saving. Login out...')
+
         return False
 
     elif(cmd == 'a'):
@@ -193,7 +199,7 @@ def after_login_menu(user_name, serviceList, logInfo):
 
         list_of_services(serviceList)
 
-    elif(cmd == 's'):
+    elif(cmd == 'f'):
         # Make a search by service
 
         make_search(serviceList)
@@ -203,6 +209,15 @@ def after_login_menu(user_name, serviceList, logInfo):
 
         delete(serviceList)
 
+    elif(cmd == 's'):
+        # Save current state:
+        status = logInfo.save_into_file(serviceList)
+
+        if status:
+            print('Saved!')
+        
+        else:
+            print('An error occurred while saving.')
 
     elif(cmd == 'h'):
         # Help
