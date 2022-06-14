@@ -2,13 +2,11 @@ import pathlib
 from pathlib import Path
 from file_handler import FileHandler
 
+
 def logg(user_name, password):
     # Finding the right file and try to open it
 
-    nyky = pathlib.Path(__file__).parent.resolve()
-    nyky = str(nyky)
-
-    filepath = nyky + "//" + user_name + ".txt"
+    filepath = user_name + ".txt"
 
     path = Path(filepath)
 
@@ -16,39 +14,39 @@ def logg(user_name, password):
         # Check if the file exists
 
         # Setting up file handler
-        filehandler = FileHandler(path, password)
+        filehandler = FileHandler(filepath, password)
 
         # rightAccess decrypt(filepath, password)
         rightAccess = filehandler.open_file()
 
-        print(filehandler.get_data())
+        services = filehandler.get_data()
 
         if rightAccess == False:
 
-            wrongUserorPass()        
+             wrongUserorPass()
 
         else:
 
-            return True
+            return True, services
 
     else:
 
         wrongUserorPass()
 
-    return False
+    return False, ""
 
 
 def wrongUserorPass():
     # In case of wrong username or password
 
-    print("Username or password wrong") 
+    print("Username or password wrong")
 
 
-def main():
+    def main():
 
-    logg("testUser", "samppa")
+        logg("testUser", "samppa")
 
-    return
+        return
 
-if __name__ == "__main__":
-    main()
+    if __name__ == "__main__":
+        main()

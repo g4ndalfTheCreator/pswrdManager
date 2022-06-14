@@ -18,7 +18,7 @@ def create_user ():
     # Calls encrypter that handles the key and loads information
   
     user_name = input('Username: ')
-    password = getpass('Password: ')
+    password = getpass.getpass('Password: ')
     password_repeated = getpass('Repeat password: ')
 
     password = check_passwords(password, password_repeated)
@@ -38,10 +38,13 @@ def login (user_name='', password=''):
         user_name = input('Username: ')
         password = getpass('Password: ')
 
-        access = logg(user_name, password)
+        logInfo = logg(user_name, password)
+
+        access = logInfo[0]
+        serviceList = logInfo[1]
 
     if access == True: # == Users file has found...
-         while after_login_menu(user_name):
+         while after_login_menu(user_name, serviceList):
             pass
 
     return
@@ -103,7 +106,7 @@ def pre_login_menu():
     return True
 
 
-def add_new_password():
+def add_new_password(services):
     # Adds new password
 
     service_name = input('Url/Service: ')
@@ -114,28 +117,61 @@ def add_new_password():
     # Check passwords
     password = check_passwords(password, password_repeated)
 
+    # Add created password to list
+    services[service_name] = user_name, password
+
     print('Password added succesfully.')
 
-def list_of_services():
-    # Prinst list of services required
+def list_of_services(services):
+    # Prints list of services required
 
     print('Following services have been registered: ')
+    print("service  :  [username  :  password]")
+    print()
 
-def make_search():
+    for key, value in services.items():
+        #G o trough dictionary and print out everyone
+
+        print(key, ' : ', value)
+
+    print()
+
+def make_search(services):
     # Get password from chosen service
 
     service_name = input('Search for password by typing service name: ')
 
-def delete():
+    for key, value in services.items():
+        # Go trough dictionary, try to find right key and print it
+
+        if key == service_name:
+            print("service  :  [username  :  password]")
+            print(key, ' : ', value)
+
+            return
+
+
+    print("cannot find service called: " + service_name)
+
+
+def delete(services):
     # Deletes chosen password
     
     service_name = input('Delete by typing service name: ')
+    for key, value in services.items():
+        # Go trough dictionary, try to find right key and delete it
+
+        if key == service_name:
+            services.pop(key)
+            return
+
+    print("cannot find service called: " + service_name)
 
 
-def after_login_menu(user_name):
+def after_login_menu(user_name, serviceList):
 
     has_login = True
-    cmd_txt = 'Login as "' + user_name + '"  Cmd: '
+    cmd_txt = 'Logged as "' + user_name + '"  Cmd: '
     cmd = input(cmd_txt)
     cmd = cmd.lower()
     
@@ -149,22 +185,22 @@ def after_login_menu(user_name):
     elif(cmd == 'a'):
         # adds new password
 
-        add_new_password()
+        add_new_password(serviceList)
 
     elif(cmd == 'l'):
         # Lists of services
 
-        list_of_services()
+        list_of_services(serviceList)
 
     elif(cmd == 's'):
         # Make a search by service
 
-        make_search()
+        make_search(serviceList)
 
     elif(cmd == 'd'):
         # Delete service from the database:
 
-        delete()
+        delete(serviceList)
 
 
     elif(cmd == 'h'):
