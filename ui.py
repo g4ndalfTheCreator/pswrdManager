@@ -44,7 +44,7 @@ def login (user_name='', password=''):
         serviceList = logInfo.login()[1]
 
     if access == True: # == Users file has found...
-         while after_login_menu(user_name, serviceList):
+         while after_login_menu(user_name, serviceList, logInfo):
             pass
 
     return
@@ -168,7 +168,7 @@ def delete(services):
     print("cannot find service called: " + service_name)
 
 
-def after_login_menu(user_name, serviceList):
+def after_login_menu(user_name, serviceList, logInfo):
 
     has_login = True
     cmd_txt = 'Logged as "' + user_name + '"  Cmd: '
@@ -178,6 +178,7 @@ def after_login_menu(user_name, serviceList):
 
     if(cmd == 'q'):
         # Closes program and encrypts
+        logInfo.logout(serviceList)
 
         print('Login out...')
         return False

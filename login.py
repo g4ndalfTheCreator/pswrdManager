@@ -1,52 +1,47 @@
-import pathlib
 from pathlib import Path
 from file_handler import FileHandler
 
+class Logg:
 
-def logg(user_name, password):
-    # Finding the right file and try to open it
+    def __init__(self, user_name, password):
+        # Setting up file handler and filepath    
 
-    filepath = user_name + ".txt"
+        self.__filepath = user_name + ".txt"
+        self.__filehandler = FileHandler(self.__filepath, password)
 
-    path = Path(filepath)
+    def login(self):
+        # Finding the right file and try to open it
 
-    if path.is_file():
-        # Check if the file exists
+        path = Path(self.__filepath)
 
-        # Setting up file handler
-        filehandler = FileHandler(filepath, password)
+        if path.is_file():
+            # Check if the file exists
 
-        # rightAccess decrypt(filepath, password)
-        rightAccess = filehandler.open_file()
+            # rightAccess decrypt(filepath, password)
+            rightAccess = self.__filehandler.open_file()
 
-        services = filehandler.get_data()
+            services = self.__filehandler.get_data()
 
-        if rightAccess == False:
+            if rightAccess == False:
 
-             wrongUserorPass()
+                self.wrongUserorPass()
+
+            else:
+
+                return True, services
 
         else:
 
-            return True, services
+            self.wrongUserorPass()
 
-    else:
+        return False, ""
 
-        wrongUserorPass()
-
-    return False, ""
-
-
-def wrongUserorPass():
-    # In case of wrong username or password
-
-    print("Username or password wrong")
+    def logout(self , services):
+        
+        self.__filehandler.write_file(services)
 
 
-    def main():
+    def wrongUserorPass(self):
+        # In case of wrong username or password
 
-        logg("testUser", "samppa")
-
-        return
-
-    if __name__ == "__main__":
-        main()
+        print("Username or password wrong")
