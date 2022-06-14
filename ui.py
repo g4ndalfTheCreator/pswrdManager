@@ -1,4 +1,4 @@
-from login import logg
+from login import Logg
 from getpass import getpass
 
 
@@ -38,10 +38,10 @@ def login (user_name='', password=''):
         user_name = input('Username: ')
         password = getpass('Password: ')
 
-        logInfo = logg(user_name, password)
+        logInfo = Logg(user_name, password)
 
-        access = logInfo[0]
-        serviceList = logInfo[1]
+        access = logInfo.login()[0]
+        serviceList = logInfo.login()[1]
 
     if access == True: # == Users file has found...
          while after_login_menu(user_name, serviceList):
