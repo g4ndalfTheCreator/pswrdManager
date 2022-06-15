@@ -18,10 +18,17 @@ def create_user ():
     # Calls encrypter that handles the key and loads information
   
     user_name = input('Username: ')
-    password = getpass.getpass('Password: ')
+    password = getpass('Password: ')
     password_repeated = getpass('Repeat password: ')
 
     password = check_passwords(password, password_repeated)
+
+    f = open(user_name + ".txt", "x")
+
+    firstRow = {'service': ['username', 'password']}
+
+    logHandler = Logg(user_name, password)
+    logHandler.save_into_file(firstRow)
     
     print('User', user_name, 'created succesfully.')
     login(user_name, password)
@@ -38,13 +45,15 @@ def login (user_name='', password=''):
         user_name = input('Username: ')
         password = getpass('Password: ')
 
-        logInfo = Logg(user_name, password)
+    logHandler = Logg(user_name, password)
 
-        access = logInfo.login()[0]
-        serviceList = logInfo.login()[1]
+    logInfo = logHandler.login()
+
+    access = logInfo[0]
+    serviceList = logInfo[1]
 
     if access == True: # == Users file has found...
-         while after_login_menu(user_name, serviceList, logInfo):
+         while after_login_menu(user_name, serviceList, logHandler):
             pass
 
     return
@@ -127,11 +136,10 @@ def list_of_services(services):
     # Prints list of services required
 
     print('Following services have been registered: ')
-    print("service  :  [username  :  password]")
     print()
 
     for key, value in services.items():
-        #G o trough dictionary and print out everyone
+        # Go through dictionary and print out every password
 
         print(key, ' : ', value)
 
@@ -169,7 +177,7 @@ def delete(services):
     print("cannot find service called: " + service_name)
 
 
-def after_login_menu(user_name, serviceList, logInfo):
+def after_login_menu(user_name, serviceList, logHandler):
 
     has_login = True
     cmd_txt = 'Logged as "' + user_name + '"  Cmd: '
@@ -179,7 +187,7 @@ def after_login_menu(user_name, serviceList, logInfo):
 
     if(cmd == 'q'):
         # Closes program and encrypts
-        status = logInfo.save_into_file(serviceList)
+        status = logHandler.save_into_file(serviceList)
 
         if status:
             print('Saved and login out...')
@@ -211,7 +219,7 @@ def after_login_menu(user_name, serviceList, logInfo):
 
     elif(cmd == 's'):
         # Save current state:
-        status = logInfo.save_into_file(serviceList)
+        status = logHandler.save_into_file(serviceList)
 
         if status:
             print('Saved!')
