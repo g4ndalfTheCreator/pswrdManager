@@ -76,7 +76,7 @@ class FileHandler:
 
             # Makes file hidden
             os.system("attrib +h " + self.__filename)
-            
+
 
             return result_of_encryption
                 
