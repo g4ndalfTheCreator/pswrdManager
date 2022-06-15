@@ -1,3 +1,5 @@
+import os
+
 from login import Logg
 from getpass import getpass
 
@@ -220,6 +222,7 @@ def after_login_menu(user_name, serviceList, logHandler):
     elif(cmd == 's'):
         # Save current state:
         status = logHandler.save_into_file(serviceList)
+        os.system("attrib -h " + user_name + ".txt")
 
         if status:
             print('Saved!')

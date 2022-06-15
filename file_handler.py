@@ -1,5 +1,6 @@
 from unittest import result
 from encrypter import Encrypter
+import os
 
 class FileHandler:
         # Handles file writing and reading
@@ -15,7 +16,8 @@ class FileHandler:
         # Tries to open a file. if file not found gives an error
 
         try:
-            # Opens a file in to read mode...
+            # Makes file visible, and opens the file in to read mode...
+            os.system("attrib -h " + self.__filename)
             file = open(self.__filename, mode="r")
 
             for encrypted_row in file:
@@ -71,6 +73,10 @@ class FileHandler:
                     print(encrypted_line, file=file_to_saved)
             
             file_to_saved.close()
+
+            # Makes file hidden
+            os.system("attrib +h " + self.__filename)
+            
 
             return result_of_encryption
                 
