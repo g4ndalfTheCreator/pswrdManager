@@ -138,7 +138,7 @@ def list_of_services(services):
     # Prints list of services required
 
     print('Following services have been registered: ')
-    print()
+    print("")
 
     for key, value in services.items():
         # Go through dictionary and print out every password
@@ -152,17 +152,32 @@ def make_search(services):
 
     service_name = input('Search for password by typing service name: ')
 
-    for key, value in services.items():
-        # Go trough dictionary, try to find right key and print it
+    i = 0
 
-        if key == service_name:
-            print("service  :  [username  :  password]")
+    for key, value in services.items():
+        # Go through dictionary, try to find right key and print it
+
+        if key.find(service_name) != -1:
+            # Check if dictionary key has typed string in it
+
+            if i == 0:
+                # First time print
+
+                print("service  :  [username  :  password]")
+                print()
+
             print(key, ' : ', value)
 
-            return
+            i = i + 1
 
+    if i == 0:
+        # If cannot find any service, then print
 
-    print("cannot find service called: " + service_name)
+        print("cannot find service called: " + service_name)
+
+    else:
+        print()
+        return
 
 
 def delete(services):
