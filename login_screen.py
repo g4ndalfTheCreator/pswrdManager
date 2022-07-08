@@ -1,6 +1,9 @@
 
 from tkinter import *
 
+import login
+
+
 class Login_screen:
 
     def __init__(self):
@@ -32,7 +35,22 @@ class Login_screen:
         self.__login_window.mainloop()
 
     def login(self):
-        print("DOES LOGINSTUFF")
+
+        username = self.__username.get()
+        password = self.__password.get()
+
+        logHandler = login.Logg(username, password)
+
+        logInfo = logHandler.login()
+
+        access = logInfo[0]
+
+        if access:
+            print("DOES LOGINSTUFF")
+
+        if not access:
+            print("DOES NOT LOGINSTUFF")
+
 
     def cancel(self):
         self.__login_window.destroy()

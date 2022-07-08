@@ -22,7 +22,7 @@ class Logg:
 
             services = self.__filehandler.get_data()
 
-            if rightAccess == False:
+            if not rightAccess:
 
                 self.wrongUserorPass()
 
@@ -45,4 +45,4 @@ class Logg:
     def wrongUserorPass(self):
         # In case of wrong username or password
 
-        print("Username or password wrong")
+        print("ERROR: Username or password wrong")
