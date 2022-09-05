@@ -5,23 +5,23 @@ class After_login_screen:
     def __init__(self):
 
         # Starup and defining window
-        self.__login_window = Tk()
+        self.__after_login_window = Tk()
 
         # Setting up login details and buttons for login
 
-        addNew_button = Button(self.__login_window, text="Add new", font=8, background="Green", foreground="White",
+        addNew_button = Button(self.__after_login_window, text="Add new", font=8, background="Green", foreground="White",
                             command=self.addNew)
-        delete_button = Button(self.__login_window, text="Delete", font=8, background="Green", foreground="White",
+        delete_button = Button(self.__after_login_window, text="Delete", font=8, background="Green", foreground="White",
                                command=self.delete)
-        search_button = Button(self.__login_window, text="Search", font=8, background="Green", foreground="White",
+        search_button = Button(self.__after_login_window, text="Search", font=8, background="Green", foreground="White",
                             command=self.search)
-        listAll_button = Button(self.__login_window, text="List all", font=8, background="Green", foreground="White",
+        listAll_button = Button(self.__after_login_window, text="List all", font=8, background="Green", foreground="White",
                                command=self.listAll)
-        settings_button = Button(self.__login_window, text="Settings", font=8, background="Green", foreground="White",
+        settings_button = Button(self.__after_login_window, text="Settings", font=8, background="Green", foreground="White",
                             command=self.settings)
-        save_button = Button(self.__login_window, text="Save", font=8, background="Green", foreground="White",
+        save_button = Button(self.__after_login_window, text="Save", font=8, background="Green", foreground="White",
                                command=self.save)
-        logout_button = Button(self.__login_window, text="Logout in", font=8, background="Green", foreground="White",
+        logout_button = Button(self.__after_login_window, text="Logout in", font=8, background="Green", foreground="White",
                             command=self.logout)
 
         # Setting up location of the buttons, entries and labels. For details see grid model in GITHUB
@@ -33,7 +33,7 @@ class After_login_screen:
         save_button.grid(row=0, column=5, sticky=E + W)
         logout_button.grid(row=0, column=6, sticky=E + W)
 
-        self.__login_window.mainloop()
+        self.__after_login_window.mainloop()
 
     def addNew(self):
         print("Adding new")
