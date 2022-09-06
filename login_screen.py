@@ -1,3 +1,5 @@
+from cgitb import text
+from distutils.cmd import Command
 import tkinter as tk
 from tkinter import *
 from tkinter.ttk import Treeview
@@ -25,6 +27,7 @@ class Login_screen(tk.Tk):
 
         frame = self.frames[page_name]
         frame.tkraise()
+    
 
 
 #Login page frame
@@ -41,6 +44,7 @@ class LoginPage(tk.Frame):
 
         log_button = Button(self, text="Log in", bg='green', command=lambda: self.Login())
         cancel_button = Button(self, text="Cancel", bg='red', command=lambda: self.Cancel())
+        register_new = Button(self, text="Register", bg='SteelBlue1', command=lambda: self.Register())
 
         username_header.grid(row=0, column=0, sticky=W + N)
         password_header.grid(row=1, column=0, sticky=E + N)
@@ -50,6 +54,7 @@ class LoginPage(tk.Frame):
 
         cancel_button.grid(row=2, column=0, sticky=E + W)
         log_button.grid(row=2, column=1, sticky=E + W)
+        register_new.grid(row=3, column=0, columnspan=2, sticky=E + W)
 
     def Login(self):
     #When login pressed
@@ -70,13 +75,70 @@ class LoginPage(tk.Frame):
             AfterLoginPage.services = serviceList
             self.master.switch_frame(AfterLoginPage)
 
-            print("DOES LOGINSTUFF")
+            print("DOES LOGINSTUFF", serviceList)
 
         if not access:
             print("DOES NOT LOGINSTUFF")
 
+    def Register(self):
+        # Opens register window
+
+        self.master.switch_frame(RegisterFrame)
+
+
     def Cancel(self):
-        print("2")
+        # Closes window
+        self.destroy()
+
+
+class RegisterFrame(tk.Frame):
+    # opens new registering page
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+
+        username_header = Label(self, text="New username/path: ")
+        password_header = Label(self, text="Password: ")
+        password_rp_header = Label(self, text="Repeat Password: ")
+
+        self.__username = tk.Entry(self, borderwidth=2, width=20)
+        self.__password = tk.Entry(self, borderwidth=2, width=20, show="*")
+        self.__password_rp = tk.Entry(self, borderwidth=2, width=20, show="*")
+
+        register_new = Button(self, text="Register user", bg='SteelBlue1', command=lambda: self.Register())
+
+        username_header.grid(row=0, column=0, sticky=W + N + E)
+        password_header.grid(row=1, column=0, sticky=E + N + W)
+        password_rp_header.grid(row=2, column=0, sticky= E + W)
+
+        self.__username.grid(row=0, column=1, sticky=W + N + E)
+        self.__password.grid(row=1, column=1, sticky=E + N + W)
+        self.__password_rp.grid(row=2, column=1, sticky = E + W)
+       
+        register_new.grid(row=3, column=0, columnspan=2, sticky=E + W)
+
+    def Register(self):
+        # Does actual registering
+        
+        username = self.__username.get()
+        password = self.__password.get()
+        password_rp = self.__password_rp.get()
+
+        if password == password_rp:
+            # Logins and creates new user
+
+            f = open(username + ".txt", "x")
+
+            firstRow = {'service': ['username', 'password']}
+
+            logHandler = login.Logg(username, password)
+            logHandler.save_into_file(firstRow)
+            
+            self.master.switch_frame(AfterLoginPage)
+
+        else:
+            # Show errormessages
+            pass
+        
 
 
 class AfterLoginPage(tk.Frame):
